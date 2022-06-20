@@ -1,0 +1,36 @@
+[gd_scene load_steps=8 format=3 uid="uid://5r7dxoni73o3"]
+
+[ext_resource type="PackedScene" uid="uid://b7fu0jyb5ngu" path="res://main/game_character/GameCharacter.tscn" id="1_q4njy"]
+[ext_resource type="Script" path="res://main/game_character/player/player.gd" id="2_bu3ff"]
+[ext_resource type="Script" path="res://main/game_character/player/player_camera.gd" id="3_jwa87"]
+[ext_resource type="Script" path="res://main/state/game_character_state/player_state/player_idle.gd" id="3_rnoue"]
+[ext_resource type="Script" path="res://main/state/game_character_state/player_state/player_run.gd" id="4_gtogi"]
+[ext_resource type="Script" path="res://main/state/game_character_state/player_state/player_air.gd" id="5_1ehej"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_es52x"]
+
+[node name="Player" instance=ExtResource( "1_q4njy" )]
+script = ExtResource( "2_bu3ff" )
+
+[node name="CollisionShape3D" parent="." index="0"]
+shape = SubResource( "CapsuleShape3D_es52x" )
+
+[node name="Camera3D" type="Camera3D" parent="." index="1"]
+transform = Transform3D(-1, 2.27124e-08, -1.37525e-07, -3.60953e-08, 0.910785, 0.412882, 1.34633e-07, 0.412882, -0.910784, 0, 2.00832, -3.60898)
+current = true
+script = ExtResource( "3_jwa87" )
+
+[node name="StateMachine" parent="." index="3"]
+initial_state = NodePath("PlayerIdle")
+
+[node name="PlayerIdle" type="Node" parent="StateMachine" index="0"]
+script = ExtResource( "3_rnoue" )
+owner_path = NodePath("../..")
+
+[node name="PlayerRun" type="Node" parent="StateMachine" index="1"]
+script = ExtResource( "4_gtogi" )
+owner_path = NodePath("../..")
+
+[node name="PlayerAir" type="Node" parent="StateMachine" index="2"]
+script = ExtResource( "5_1ehej" )
+owner_path = NodePath("../..")

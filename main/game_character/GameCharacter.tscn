@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://b7fu0jyb5ngu"]
+
+[ext_resource type="Script" path="res://main/game_character/game_character.gd" id="1_q8dag"]
+[ext_resource type="Script" path="res://main/state/state_machine/state_machine.gd" id="2_mkwo0"]
+
+[node name="GameCharacter" type="CharacterBody3D"]
+script = ExtResource( "1_q8dag" )
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource( "2_mkwo0" )
+
+[node name="StateLabel" type="Label3D" parent="."]
+billboard = 1
+text = "State"

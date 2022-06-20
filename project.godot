@@ -6,32 +6,68 @@
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
 
-config_version=4
+config_version=5
 
-_global_script_classes=[ {
-"base": "Spatial",
-"class": "Character",
-"language": "GDScript",
-"path": "res://main/character/character.gd"
+_global_script_classes=[{
+"base": "CharacterBody3D",
+"class": &"GameCharacter",
+"language": &"GDScript",
+"path": "res://main/game_character/game_character.gd"
 }, {
 "base": "State",
-"class": "CharacterState",
-"language": "GDScript",
-"path": "res://main/state_machine/state/character_state/character_state.gd"
+"class": &"GameCharacterState",
+"language": &"GDScript",
+"path": "res://main/state/game_character_state/game_character_state.gd"
+}, {
+"base": "GameCharacter",
+"class": &"Player",
+"language": &"GDScript",
+"path": "res://main/game_character/player/player.gd"
+}, {
+"base": "PlayerState",
+"class": &"PlayerAir",
+"language": &"GDScript",
+"path": "res://main/state/game_character_state/player_state/player_air.gd"
+}, {
+"base": "Camera3D",
+"class": &"PlayerCamera",
+"language": &"GDScript",
+"path": "res://main/game_character/player/player_camera.gd"
+}, {
+"base": "PlayerState",
+"class": &"PlayerIdle",
+"language": &"GDScript",
+"path": "res://main/state/game_character_state/player_state/player_idle.gd"
+}, {
+"base": "PlayerState",
+"class": &"PlayerRun",
+"language": &"GDScript",
+"path": "res://main/state/game_character_state/player_state/player_run.gd"
+}, {
+"base": "GameCharacterState",
+"class": &"PlayerState",
+"language": &"GDScript",
+"path": "res://main/state/game_character_state/player_state/player_state.gd"
 }, {
 "base": "Node",
-"class": "State",
-"language": "GDScript",
-"path": "res://main/state_machine/state/state.gd"
+"class": &"State",
+"language": &"GDScript",
+"path": "res://main/state/state.gd"
 }, {
 "base": "Node",
-"class": "StateMachine",
-"language": "GDScript",
-"path": "res://main/state_machine/state_machine.gd"
-} ]
+"class": &"StateMachine",
+"language": &"GDScript",
+"path": "res://main/state/state_machine/state_machine.gd"
+}]
 _global_script_class_icons={
-"Character": "",
-"CharacterState": "",
+"GameCharacter": "",
+"GameCharacterState": "",
+"Player": "",
+"PlayerAir": "",
+"PlayerCamera": "",
+"PlayerIdle": "",
+"PlayerRun": "",
+"PlayerState": "",
 "State": "",
 "StateMachine": ""
 }
@@ -39,7 +75,42 @@ _global_script_class_icons={
 [application]
 
 config/name="ThirdPersonCombat"
+run/main_scene="res://main/main.tscn"
+config/features=PackedStringArray("4.0")
 config/icon="res://icon.png"
+
+[input]
+
+move_left={
+"deadzone": 0.2,
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":0,"axis_value":-1.0,"script":null)
+]
+}
+move_right={
+"deadzone": 0.2,
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":0,"axis_value":1.0,"script":null)
+]
+}
+move_forward={
+"deadzone": 0.2,
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":1,"axis_value":-1.0,"script":null)
+]
+}
+move_backward={
+"deadzone": 0.2,
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":1,"axis_value":1.0,"script":null)
+]
+}
+cam_left={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":2,"axis_value":-1.0,"script":null)
+]
+}
+cam_right={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":2,"axis_value":1.0,"script":null)
+]
+}
 
 [physics]
 
