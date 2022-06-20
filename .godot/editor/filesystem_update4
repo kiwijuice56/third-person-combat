@@ -1,8 +1,11 @@
-res://main/game_character/player/Player.tscn
-res://main/game_character/player/player.gd
-res://main/state/game_character_state/player_state/player_air.gd
 res://main/main.tscn
-res://main/state/game_character_state/player_state/player_idle.gd
+res://main/game_character/player/Player.tscn
 res://main/game_character/GameCharacter.tscn
 res://main/state/game_character_state/player_state/player_run.gd
+res://main/state/game_character_state/player_state/player_air.gd
+res://main/state/game_character_state/player_state/player_idle.gd
+res://main/game_character/player/player.gd
+res://main/game_character/game_character.gd
+res://main/state/state_machine/state_machine.gd
 res://main/game_character/player/player_camera.gd
+res://main/state/game_character_state/player_state/player_strafe.gd

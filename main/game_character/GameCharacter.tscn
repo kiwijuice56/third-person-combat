@@ -4,6 +4,8 @@
 [ext_resource type="Script" path="res://main/state/state_machine/state_machine.gd" id="2_mkwo0"]
 
 [node name="GameCharacter" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 0
 script = ExtResource( "1_q8dag" )
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -15,4 +17,5 @@ script = ExtResource( "2_mkwo0" )
 
 [node name="StateLabel" type="Label3D" parent="."]
 billboard = 1
+no_depth_test = true
 text = "State"

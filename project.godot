@@ -49,6 +49,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://main/state/game_character_state/player_state/player_state.gd"
 }, {
+"base": "PlayerState",
+"class": &"PlayerStrafe",
+"language": &"GDScript",
+"path": "res://main/state/game_character_state/player_state/player_strafe.gd"
+}, {
 "base": "Node",
 "class": &"State",
 "language": &"GDScript",
@@ -68,6 +73,7 @@ _global_script_class_icons={
 "PlayerIdle": "",
 "PlayerRun": "",
 "PlayerState": "",
+"PlayerStrafe": "",
 "State": "",
 "StateMachine": ""
 }
@@ -111,9 +117,27 @@ cam_right={
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":2,"axis_value":1.0,"script":null)
 ]
 }
+jump={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":1,"pressure":0.0,"pressed":false,"script":null)
+]
+}
+target={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":5,"axis_value":1.0,"script":null)
+, Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":4,"axis_value":1.0,"script":null)
+]
+}
+
+[layer_names]
+
+3d_render/layer_1="Player"
+3d_render/layer_2="Enemy"
+3d_render/layer_3="Npc"
 
 [physics]
 
+3d/default_gravity=1.0
 common/enable_pause_aware_picking=true
 
 [rendering]

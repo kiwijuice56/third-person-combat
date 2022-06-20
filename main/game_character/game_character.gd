@@ -1,6 +1,9 @@
 extends CharacterBody3D
 class_name GameCharacter
 
+@export var mesh_path: NodePath
+@onready var mesh: Node3D = get_node(mesh_path)
+
 var gravity = -ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _ready() -> void:

@@ -3,6 +3,7 @@ class_name StateMachine
 
 signal transitioned(state_name)
 
+@export var state_enabled: bool = true
 @export var initial_state: NodePath
 @onready var state: State = get_node(initial_state)
 
@@ -12,7 +13,10 @@ func _ready():
 		var state_child: State = child as State
 		assert(state_child != null)
 		state_child.state_machine = self
-	state.enter()
+	if not state_enabled:
+		set_physics_process(false)
+	else:
+		state.enter()
 
 func _physics_process(delta) -> void:
 	state.physics_update(delta)
