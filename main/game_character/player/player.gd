@@ -1,10 +1,13 @@
 extends GameCharacter
 class_name Player
 
-const SPEED := 12.0
+const SPEED := 9.0
 const JUMP_VELOCITY := 24.0
 
 @onready var camera: Camera3D = $Camera3D
+@onready var shape: CollisionShape3D = $CollisionShape3D
+@onready var targeting_range: Area3D = $TargetingRange
+
 var targets: Array[CharacterBody3D] = []
 
 func _ready():
@@ -25,8 +28,6 @@ func is_moving() -> bool:
 
 func target_entered(target_area: Object) -> void:
 	targets.append(target_area as CharacterBody3D)
-	print("player.gd targets: " + str(targets))
 
 func target_exited(target_area: Object) -> void:
 	targets.erase(target_area as CharacterBody3D)
-	print("player.gd targets: " + str(targets))

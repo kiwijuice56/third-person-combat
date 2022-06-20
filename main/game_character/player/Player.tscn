@@ -9,19 +9,18 @@
 [ext_resource type="Script" path="res://main/state/game_character_state/player_state/player_strafe.gd" id="5_uypwk"]
 [ext_resource type="PackedScene" uid="uid://bfd86b1ciods7" path="res://main/game_character/player/PlayerModel.glb" id="7_bsof1"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_es52x"]
-radius = 0.35
-height = 1.1
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0g4xv"]
+height = 1.0
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_mjxl4"]
-radius = 7.0
+[sub_resource type="BoxShape3D" id="BoxShape3D_8colr"]
+size = Vector3(8, 6, 12)
 
 [node name="Player" instance=ExtResource( "1_q4njy" )]
 script = ExtResource( "2_bu3ff" )
 mesh_path = NodePath("PlayerModel")
 
 [node name="CollisionShape3D" parent="." index="0"]
-shape = SubResource( "CapsuleShape3D_es52x" )
+shape = SubResource( "CapsuleShape3D_0g4xv" )
 
 [node name="StateMachine" parent="." index="2"]
 initial_state = NodePath("PlayerIdle")
@@ -45,7 +44,7 @@ owner_path = NodePath("../..")
 [node name="PlayerModel" parent="." index="4" instance=ExtResource( "7_bsof1" )]
 
 [node name="Camera3D" type="Camera3D" parent="." index="5"]
-transform = Transform3D(-1, 2.27125e-08, -1.37525e-07, -3.60953e-08, 0.910785, 0.412882, 1.34633e-07, 0.412882, -0.910785, 0, 2.00832, -3.60898)
+transform = Transform3D(-1, 2.27124e-08, -1.37525e-07, 3.30054e-09, 0.990217, 0.139536, 1.39349e-07, 0.139536, -0.990217, 0, 2.00832, -3.60898)
 current = true
 script = ExtResource( "3_jwa87" )
 
@@ -54,4 +53,5 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TargetingRange" index="0"]
-shape = SubResource( "SphereShape3D_mjxl4" )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+shape = SubResource( "BoxShape3D_8colr" )

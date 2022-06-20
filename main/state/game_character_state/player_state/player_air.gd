@@ -1,7 +1,7 @@
 extends PlayerState
 class_name PlayerAir
 
-func physics_update(delta) -> void:	
+func physics_update(_delta) -> void:
 	# Move the same as PlayerRun but apply gravity
 	var input_direction: Vector2 = player.get_input_direction().normalized()
 	var camera_basis: Basis = player.camera.global_transform.basis
@@ -10,8 +10,12 @@ func physics_update(delta) -> void:
 	player.velocity.y = old_y_vel + player.gravity
 	player.move_and_slide()
 	
+	# Update targeting range rotation
+	player.targeting_range.rotation.y = player.camera.rotation.y
+	
+	# Update mesh rotation
 	if player.is_moving():
-		player.mesh.rotation.y = player.camera.rotation.y - Vector2(1, 0).angle_to(input_direction)
+		player.mesh.rotation.y = player.camera.rotation.y - Vector2(0, -1).angle_to(input_direction)
 	
 	if player.is_on_floor():
 		if not player.is_moving():
