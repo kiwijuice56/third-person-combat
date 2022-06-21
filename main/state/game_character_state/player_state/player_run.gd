@@ -1,6 +1,8 @@
 extends PlayerState
 class_name PlayerRun
 
+const TURN_TWEEN_CUTOFF: float = PI/2
+
 func physics_update(delta) -> void:
 	if not player.is_on_floor():
 		state_machine.transition_to("PlayerAir")
@@ -12,7 +14,9 @@ func physics_update(delta) -> void:
 	# Take directional input and move in camera direction axis
 	var input_direction: Vector2 = player.get_input_direction().normalized()
 	var camera_basis: Basis = player.camera.global_transform.basis
-	player.velocity = player.SPEED * (input_direction.x * camera_basis.x) + player.SPEED * (input_direction.y * camera_basis.z)
+	
+	player.accel_direction += input_direction * player.ACCEL
+	player.velocity = (player.accel_direction.x * camera_basis.x + player.accel_direction.y * camera_basis.z) * player.MAX_SPEED
 	player.velocity.y = 0
 	player.move_and_slide()
 	

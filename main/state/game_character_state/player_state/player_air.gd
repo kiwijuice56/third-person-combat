@@ -6,7 +6,9 @@ func physics_update(_delta) -> void:
 	var input_direction: Vector2 = player.get_input_direction().normalized()
 	var camera_basis: Basis = player.camera.global_transform.basis
 	var old_y_vel = player.velocity.y
-	player.velocity = player.SPEED * (input_direction.x * camera_basis.x) + player.SPEED * (input_direction.y * camera_basis.z)
+	
+	player.accel_direction += input_direction * player.ACCEL
+	player.velocity = (player.accel_direction.x * camera_basis.x + player.accel_direction.y * camera_basis.z) * player.MAX_SPEED
 	player.velocity.y = old_y_vel + player.gravity
 	player.move_and_slide()
 	

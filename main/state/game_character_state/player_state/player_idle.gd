@@ -10,7 +10,11 @@ func physics_update(_delta) -> void:
 		return
 	
 	# Keep colliding but cancel velocity
-	player.velocity = Vector3()
+	player.accel_direction -= player.accel_direction * player.ACCEL
+	
+	var camera_basis: Basis = player.camera.global_transform.basis
+	player.velocity = (player.accel_direction.x * camera_basis.x + player.accel_direction.y * camera_basis.z) * player.MAX_SPEED
+	player.velocity.y = 0
 	player.move_and_slide()
 	
 	# Update targeting range rotation

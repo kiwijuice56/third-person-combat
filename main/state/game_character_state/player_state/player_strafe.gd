@@ -18,7 +18,7 @@ func physics_update(_delta) -> void:
 	# Take directional input and move in camera direction axis
 	var input_direction: Vector2 = player.get_input_direction().normalized()
 	var camera_basis: Basis = player.camera.global_transform.basis
-	player.velocity = DRAG * player.SPEED * (
+	player.velocity = DRAG * player.MAX_SPEED * (
 		(HORIZONTAL_DRAG * input_direction.x * camera_basis.x) +
 		((BACKWARD_DRAG if input_direction.y > 0.0 else 1.0) * input_direction.y * camera_basis.z))
 	player.velocity.y = 0

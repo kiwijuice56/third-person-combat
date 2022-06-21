@@ -1,13 +1,17 @@
 extends GameCharacter
 class_name Player
 
-const SPEED := 9.0
-const JUMP_VELOCITY := 24.0
+const ACCEL: float = 0.1
+const MAX_SPEED: float = 9.0
+const JUMP_VELOCITY: float = 20.0
 
 @onready var camera: Camera3D = $Camera3D
 @onready var shape: CollisionShape3D = $CollisionShape3D
 @onready var targeting_range: Area3D = $TargetingRange
 
+var accel_direction: Vector2 = Vector2():
+	set(value):
+		accel_direction = value if value.length() < 1.0 else value.normalized()
 var targets: Array[CharacterBody3D] = []
 
 func _ready():

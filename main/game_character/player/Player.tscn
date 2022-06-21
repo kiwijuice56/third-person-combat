@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://5r7dxoni73o3"]
+[gd_scene load_steps=13 format=3 uid="uid://5r7dxoni73o3"]
 
 [ext_resource type="PackedScene" uid="uid://b7fu0jyb5ngu" path="res://main/game_character/GameCharacter.tscn" id="1_q4njy"]
 [ext_resource type="Script" path="res://main/game_character/player/player.gd" id="2_bu3ff"]
@@ -7,18 +7,22 @@
 [ext_resource type="Script" path="res://main/state/game_character_state/player_state/player_run.gd" id="4_gtogi"]
 [ext_resource type="Script" path="res://main/state/game_character_state/player_state/player_air.gd" id="5_1ehej"]
 [ext_resource type="Script" path="res://main/state/game_character_state/player_state/player_strafe.gd" id="5_uypwk"]
-[ext_resource type="PackedScene" uid="uid://bfd86b1ciods7" path="res://main/game_character/player/PlayerModel.glb" id="7_bsof1"]
 [ext_resource type="Script" path="res://main/state/game_character_state/player_state/player_strafe_air.gd" id="7_r383q"]
+[ext_resource type="PackedScene" uid="uid://b0d61e7p84fd7" path="res://main/game_character/player/PlayerBlend.blend" id="8_337qj"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0g4xv"]
-height = 1.0
+height = 1.5
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4h7s6"]
+radius = 0.25
+height = 1.25
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8colr"]
 size = Vector3(8, 6, 12)
 
 [node name="Player" instance=ExtResource( "1_q4njy" )]
 script = ExtResource( "2_bu3ff" )
-mesh_path = NodePath("PlayerModel")
+mesh_path = NodePath("PlayerBlend")
 
 [node name="CollisionShape3D" parent="." index="0"]
 shape = SubResource( "CapsuleShape3D_0g4xv" )
@@ -46,7 +50,17 @@ owner_path = NodePath("../..")
 script = ExtResource( "7_r383q" )
 owner_path = NodePath("../..")
 
-[node name="PlayerModel" parent="." index="4" instance=ExtResource( "7_bsof1" )]
+[node name="PlayerBlend" parent="." index="4" instance=ExtResource( "8_337qj" )]
+
+[node name="Model" parent="PlayerBlend" index="0"]
+transform = Transform3D(1, 0, 0, 0, -1, 1.50996e-07, 0, -1.50996e-07, -1, 0, 0, 0)
+
+[node name="AttackHitbox" type="Area3D" parent="PlayerBlend" index="2"]
+transform = Transform3D(0.728323, 0, 0.685234, 0, 1, 0, -0.685234, 0, 0.728323, 0, 0, 0.179487)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerBlend/AttackHitbox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, -0.845712)
+shape = SubResource( "CapsuleShape3D_4h7s6" )
 
 [node name="Camera3D" type="Camera3D" parent="." index="5"]
 transform = Transform3D(-1, 2.27124e-08, -1.37525e-07, 3.30054e-09, 0.990217, 0.139536, 1.39349e-07, 0.139536, -0.990217, 0, 2.00832, -3.60898)
@@ -60,3 +74,5 @@ collision_mask = 2
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TargetingRange" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6.25)
 shape = SubResource( "BoxShape3D_8colr" )
+
+[editable path="PlayerBlend"]

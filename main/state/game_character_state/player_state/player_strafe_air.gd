@@ -6,7 +6,7 @@ var flip_direction: Vector2
 func physics_update(_delta) -> void:
 	var old_y_vel = player.velocity.y
 	var camera_basis: Basis = player.camera.global_transform.basis
-	player.velocity = player.SPEED * (flip_direction.x * camera_basis.x) + player.SPEED * (flip_direction.y * camera_basis.z)
+	player.velocity = player.MAX_SPEED * (flip_direction.x * camera_basis.x + flip_direction.y * camera_basis.z)
 	player.velocity.y = old_y_vel + player.gravity
 	player.move_and_slide()
 	
