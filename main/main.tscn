@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://c1rhruofxtwxv"]
+[gd_scene load_steps=9 format=3 uid="uid://c1rhruofxtwxv"]
 
 [ext_resource type="PackedScene" path="res://main/game_character/player/player.tscn" id="1_kr7jf"]
 [ext_resource type="PackedScene" uid="uid://b7fu0jyb5ngu" path="res://main/game_character/GameCharacter.tscn" id="2_a13qh"]
@@ -10,6 +10,20 @@ size = Vector2(25, 25)
 size = Vector3(25, 2, 25)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x67qy"]
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_nb466"]
+rayleigh_coefficient = 0.62
+rayleigh_color = Color(0.4, 0.6, 0.803922, 1)
+mie_coefficient = 0.047
+mie_color = Color(0.811765, 0.454902, 0.584314, 1)
+ground_color = Color(0.054902, 0.0862745, 0.172549, 1)
+
+[sub_resource type="Sky" id="Sky_g57fw"]
+sky_material = SubResource( "PhysicalSkyMaterial_nb466" )
+
+[sub_resource type="Environment" id="Environment_24ohx"]
+background_mode = 2
+sky = SubResource( "Sky_g57fw" )
 
 [node name="Main" type="Node"]
 
@@ -38,5 +52,8 @@ shape = SubResource( "CapsuleShape3D_x67qy" )
 
 [node name="StateMachine" parent="GameCharacter" index="2"]
 state_enabled = false
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( "Environment_24ohx" )
 
 [editable path="GameCharacter"]

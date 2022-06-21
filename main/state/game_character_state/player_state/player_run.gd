@@ -23,7 +23,7 @@ func physics_update(delta) -> void:
 	player.mesh.rotation.y = player.camera.rotation.y - Vector2(0, -1).angle_to(input_direction)
 	
 	if Input.is_action_just_pressed("jump"):
-		state_machine.transition_to("PlayerAir", {"init_y_vel" : player.JUMP_VELOCITY})
+		state_machine.transition_to("PlayerAir", {"init_velocity" : Vector3(0, player.JUMP_VELOCITY, 0)})
 		return
 	if Input.is_action_just_pressed("target") and len(player.targets) > 0:
 		state_machine.transition_to("PlayerStrafe")

@@ -1,9 +1,12 @@
 extends PlayerState
 class_name PlayerStrafe
 
-const DRAG: float = 0.85
-const HORIZONTAL_DRAG: float = 0.65
-const BACKWARD_DRAG: float = 0.85
+# Slowing of movement in different directions while strafing
+const DRAG: float = 0.75
+const HORIZONTAL_DRAG: float = 0.55
+const BACKWARD_DRAG: float = 0.55
+
+const SIDE_STEP_VELOCITY: Vector2 = Vector2(10, 12)
 
 func physics_update(_delta) -> void:
 	# Return with no targets or prompt to untarget
@@ -37,8 +40,14 @@ func physics_update(_delta) -> void:
 		return
 	
 	if Input.is_action_just_pressed("jump"):
-		state_machine.transition_to("PlayerAir", {"init_y_vel" : player.JUMP_VELOCITY})
-		player.camera.recenter()
+		var flip_direction: Vector2
+		if Input.is_action_pressed("move_left"):
+			flip_direction = Vector2(-1, -0.7).normalized()
+		if Input.is_action_pressed("move_right"):
+			flip_direction = Vector2(1, -0.7).normalized()
+		if Input.is_action_pressed("move_backward"):
+			flip_direction = Vector2(0, 1).normalized()
+		state_machine.transition_to("PlayerStrafeAir", {"init_velocity" : Vector3(0, SIDE_STEP_VELOCITY.y, 0), "flip_direction": flip_direction})
 		return
 
 func enter(_msg: Dictionary = {}) -> void:

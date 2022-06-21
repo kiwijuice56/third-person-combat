@@ -24,4 +24,4 @@ func physics_update(_delta) -> void:
 			state_machine.transition_to("PlayerRun")
 
 func enter(msg: Dictionary = {}) -> void:
-	player.velocity.y = msg["init_y_vel"] if "init_y_vel" in msg else player.gravity
+	player.velocity = msg["init_velocity"] if "init_velocity" in msg else Vector3(0, player.gravity, 0)

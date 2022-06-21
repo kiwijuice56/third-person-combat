@@ -7,3 +7,5 @@ res://main/state/game_character_state/player_state/player_strafe.gd
 res://main/state/game_character_state/player_state/player_run.gd
 res://main/state/game_character_state/player_state/player_idle.gd
 res://main/state/game_character_state/player_state/player_air.gd
+res://main/state/game_character_state/player_state/player_strafe_air.gd
+res://default_env.tres
