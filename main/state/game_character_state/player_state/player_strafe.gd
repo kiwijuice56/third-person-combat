@@ -8,6 +8,9 @@ const BACKWARD_DRAG: float = 0.55
 
 const SIDE_STEP_VELOCITY: Vector2 = Vector2(10, 12)
 
+# How far to offset camera when moving left or right
+const HORIZONTAL_OFFSET: float = 0.65
+
 func physics_update(_delta) -> void:
 	# Return with no targets or prompt to untarget
 	if len(player.targets) == 0 or Input.is_action_just_pressed("target"):
@@ -25,13 +28,20 @@ func physics_update(_delta) -> void:
 	player.move_and_slide()
 	
 	# Rotate camera and player components to face target
-	player.camera.look_at_target(player.targets[0])
+	if input_direction.x < 0:
+		player.camera.look_at_target(player.targets[0], camera_basis.x * HORIZONTAL_OFFSET)
+	elif input_direction.x > 0:
+		player.camera.look_at_target(player.targets[0], -camera_basis.x * HORIZONTAL_OFFSET)
+	else:
+		player.camera.look_at_target(player.targets[0])
 	
 	player.mesh.look_at(player.targets[0].global_transform.origin)
-	player.mesh.rotation = Vector3(0, player.mesh.rotation.y, 0)
 	player.shape.look_at(player.targets[0].global_transform.origin)
-	player.shape.rotation = Vector3(0, player.shape.rotation.y, 0)
 	player.targeting_range.look_at(player.targets[0].global_transform.origin)
+	
+	# Cancel all but y rotation
+	player.mesh.rotation = Vector3(0, player.mesh.rotation.y, 0)
+	player.shape.rotation = Vector3(0, player.shape.rotation.y, 0)
 	player.targeting_range.rotation = Vector3(0, player.targeting_range.rotation.y, 0)
 	
 	if not player.is_on_floor():

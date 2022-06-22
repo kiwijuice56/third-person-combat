@@ -1,6 +1,8 @@
 extends PlayerState
 class_name PlayerStrafeAir
 
+const HORIZONTAL_OFFSET: float = PlayerStrafe.HORIZONTAL_OFFSET
+
 var flip_direction: Vector2
 
 func physics_update(_delta) -> void:
@@ -12,13 +14,19 @@ func physics_update(_delta) -> void:
 	
 	# Rotate camera and player components to face target
 	if len(player.targets) > 0:
-		player.camera.look_at_target(player.targets[0])
+		if flip_direction.x < 0:
+			player.camera.look_at_target(player.targets[0], camera_basis.x * HORIZONTAL_OFFSET)
+		elif flip_direction.x > 0:
+			player.camera.look_at_target(player.targets[0], -camera_basis.x * HORIZONTAL_OFFSET)
+		else:
+			player.camera.look_at_target(player.targets[0])
 		
 		player.mesh.look_at(player.targets[0].global_transform.origin)
-		player.mesh.rotation = Vector3(0, player.mesh.rotation.y, 0)
 		player.shape.look_at(player.targets[0].global_transform.origin)
-		player.shape.rotation = Vector3(0, player.shape.rotation.y, 0)
 		player.targeting_range.look_at(player.targets[0].global_transform.origin)
+		
+		player.mesh.rotation = Vector3(0, player.mesh.rotation.y, 0)
+		player.shape.rotation = Vector3(0, player.shape.rotation.y, 0)
 		player.targeting_range.rotation = Vector3(0, player.targeting_range.rotation.y, 0)
 	
 	if player.is_on_floor():
