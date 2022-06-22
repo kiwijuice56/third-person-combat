@@ -1,3 +1,6 @@
+Label
+CanvasLayer
+Label3D
 CollisionShape3D
 Area3D
 WorldEnvironment
@@ -5,7 +8,6 @@ Camera3D
 Position3D
 DirectionalLight3D
 MeshInstance3D
-Label3D
 Node
 GameCharacterState (game_character_state.gd)
 AnimationPlayer

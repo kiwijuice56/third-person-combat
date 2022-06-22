@@ -9,6 +9,11 @@
 config_version=5
 
 _global_script_classes=[{
+"base": "Label",
+"class": &"FpsLabel",
+"language": &"GDScript",
+"path": "res://main/fps_label.gd"
+}, {
 "base": "CharacterBody3D",
 "class": &"GameCharacter",
 "language": &"GDScript",
@@ -70,6 +75,7 @@ _global_script_classes=[{
 "path": "res://main/state/state_machine/state_machine.gd"
 }]
 _global_script_class_icons={
+"FpsLabel": "",
 "GameCharacter": "",
 "GameCharacterState": "",
 "Player": "",
