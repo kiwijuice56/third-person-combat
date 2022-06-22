@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://c1rhruofxtwxv"]
+[gd_scene load_steps=10 format=3 uid="uid://c1rhruofxtwxv"]
 
 [ext_resource type="PackedScene" path="res://main/game_character/player/player.tscn" id="1_kr7jf"]
 [ext_resource type="PackedScene" uid="uid://b7fu0jyb5ngu" path="res://main/game_character/GameCharacter.tscn" id="2_a13qh"]
+[ext_resource type="Script" path="res://main/fps_label.gd" id="3_dqarp"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_jthy5"]
 size = Vector2(25, 25)
@@ -55,5 +56,15 @@ state_enabled = false
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( "Environment_24ohx" )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 12
+text = "fps: "
+script = ExtResource( "3_dqarp" )
+theme_override_font_sizes/font_size = 12
 
 [editable path="GameCharacter"]

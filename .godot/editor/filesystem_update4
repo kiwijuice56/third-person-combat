@@ -4,3 +4,4 @@ res://main/game_character/player/Player.tscn
 res://main/game_character/player/player_camera.gd
 res://main/state/game_character_state/player_state/player_strafe.gd
 res://main/state/game_character_state/player_state/player_strafe_air.gd
+res://main/fps_label.gd
