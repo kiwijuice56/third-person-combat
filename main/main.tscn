@@ -65,6 +65,5 @@ offset_bottom = 23.0
 theme_override_font_sizes/font_size = 12
 text = "fps: "
 script = ExtResource( "3_dqarp" )
-theme_override_font_sizes/font_size = 12
 
 [editable path="GameCharacter"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://5r7dxoni73o3"]
+[gd_scene load_steps=16 format=3 uid="uid://5r7dxoni73o3"]
 
 [ext_resource type="PackedScene" uid="uid://b7fu0jyb5ngu" path="res://main/game_character/GameCharacter.tscn" id="1_q4njy"]
 [ext_resource type="Script" path="res://main/game_character/player/player.gd" id="2_bu3ff"]
@@ -8,10 +8,23 @@
 [ext_resource type="Script" path="res://main/state/game_character_state/player_state/player_air.gd" id="5_1ehej"]
 [ext_resource type="Script" path="res://main/state/game_character_state/player_state/player_strafe.gd" id="5_uypwk"]
 [ext_resource type="Script" path="res://main/state/game_character_state/player_state/player_strafe_air.gd" id="7_r383q"]
-[ext_resource type="PackedScene" uid="uid://b0d61e7p84fd7" path="res://main/game_character/player/PlayerBlend.blend" id="8_337qj"]
+[ext_resource type="PackedScene" uid="uid://bbyqfivjuoavt" path="res://main/game_character/player/PlayerModel.glb" id="8_duvo4"]
+[ext_resource type="Shader" path="res://main/shader/psx_shader.gdshader" id="9_mnf5y"]
+[ext_resource type="Texture2D" uid="uid://cbs6kpbtgftvg" path="res://assets/body_texture.png" id="10_bu1vy"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0g4xv"]
-height = 1.5
+height = 2.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_57yxj"]
+render_priority = 0
+shader = ExtResource( "9_mnf5y" )
+shader_param/albedoTex = ExtResource( "10_bu1vy" )
+shader_param/color = Color(1, 1, 1, 1)
+shader_param/cull_distance = 30.0
+shader_param/resolution = 256.0
+shader_param/specular_intensity = 1.0
+shader_param/uv_offset = null
+shader_param/uv_scale = null
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4h7s6"]
 radius = 0.25
@@ -22,9 +35,10 @@ size = Vector3(8, 6, 12)
 
 [node name="Player" instance=ExtResource( "1_q4njy" )]
 script = ExtResource( "2_bu3ff" )
-mesh_path = NodePath("PlayerBlend")
+mesh_path = NodePath("PlayerModel")
 
 [node name="CollisionShape3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20868, 0)
 shape = SubResource( "CapsuleShape3D_0g4xv" )
 
 [node name="StateMachine" parent="." index="2"]
@@ -50,24 +64,47 @@ owner_path = NodePath("../..")
 script = ExtResource( "7_r383q" )
 owner_path = NodePath("../..")
 
-[node name="PlayerBlend" parent="." index="4" instance=ExtResource( "8_337qj" )]
+[node name="PlayerModel" parent="." index="4" instance=ExtResource( "8_duvo4" )]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
 
-[node name="Model" parent="PlayerBlend" index="0"]
-transform = Transform3D(1, 0, 0, 0, -1, 1.50996e-07, 0, -1.50996e-07, -1, 0, 0, 0)
+[node name="Skeleton3D" parent="PlayerModel/Armature" index="0"]
+bones/0/rotation = Quaternion(0.0727496, 0, -1.61537e-17, 0.99735)
+bones/1/rotation = Quaternion(0.0639138, 1.18966e-07, 7.61912e-09, 0.997955)
+bones/2/rotation = Quaternion(-0.0662944, 1.8526e-14, -1.58058e-08, 0.9978)
+bones/4/position = Vector3(0.917325, 6.66407, 0.315903)
+bones/4/rotation = Quaternion(1.65842e-07, -9.28818e-08, -0.994536, 0.104391)
+bones/5/rotation = Quaternion(3.14811e-08, 2.49653e-07, -0.120799, 0.992677)
+bones/8/rotation = Quaternion(0.0316519, -0.248419, -0.0926709, 0.96369)
+bones/9/position = Vector3(0.383208, 4.39234, 0.0621168)
+bones/9/rotation = Quaternion(-0.203303, -0.0965132, -0.974027, 0.0249899)
+bones/10/rotation = Quaternion(-0.136702, -0.000303182, -0.0106893, 0.990555)
+bones/13/position = Vector3(-0.917325, 6.66407, 0.315903)
+bones/13/rotation = Quaternion(1.47556e-07, 1.09631e-07, 0.996545, 0.0830559)
+bones/14/rotation = Quaternion(-2.00779e-10, -4.94588e-08, 0.0954228, 0.995437)
+bones/17/rotation = Quaternion(-0.0136739, 0.255386, 0.0783777, 0.96356)
+bones/18/position = Vector3(-0.414267, 4.39234, 0.0621168)
+bones/18/rotation = Quaternion(-0.120162, 0.0982815, 0.987736, 0.0167344)
+bones/19/rotation = Quaternion(-0.136702, 0.00030319, 0.0106893, 0.990555)
 
-[node name="AttackHitbox" type="Area3D" parent="PlayerBlend" index="2"]
-transform = Transform3D(0.728323, 0, 0.685234, 0, 1, 0, -0.685234, 0, 0.728323, 0, 0, 0.179487)
+[node name="Body" parent="PlayerModel/Armature/Skeleton3D" index="0"]
+surface_material_override/0 = SubResource( "ShaderMaterial_57yxj" )
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerBlend/AttackHitbox" index="0"]
-transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, -0.845712)
-shape = SubResource( "CapsuleShape3D_4h7s6" )
+[node name="AnimationPlayer" parent="PlayerModel" index="1"]
+autoplay = "Idle"
 
 [node name="Camera3D" type="Camera3D" parent="." index="5"]
 transform = Transform3D(-1, 2.27124e-08, -1.37525e-07, 3.30054e-09, 0.990217, 0.139536, 1.39349e-07, 0.139536, -0.990217, 0, 2.00832, -3.60898)
 current = true
 script = ExtResource( "3_jwa87" )
 
-[node name="TargetingRange" type="Area3D" parent="." index="6"]
+[node name="AttackHitbox" type="Area3D" parent="." index="6"]
+transform = Transform3D(0.145665, 0, 0.137047, 0, 0.2, 0, -0.137047, 0, 0.145665, 0, 0, 0.0358974)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AttackHitbox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, -0.845712)
+shape = SubResource( "CapsuleShape3D_4h7s6" )
+
+[node name="TargetingRange" type="Area3D" parent="." index="7"]
 collision_layer = 0
 collision_mask = 2
 
@@ -75,4 +112,4 @@ collision_mask = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6.25)
 shape = SubResource( "BoxShape3D_8colr" )
 
-[editable path="PlayerBlend"]
+[editable path="PlayerModel"]
