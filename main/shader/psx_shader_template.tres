@@ -1,0 +1,12 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://b6geio35bbh1x"]
+
+[ext_resource type="Shader" path="res://main/shader/psx_shader.gdshader" id="1_ptr2e"]
+
+[resource]
+render_priority = 0
+shader = ExtResource( "1_ptr2e" )
+shader_param/affine_texture_mapping = true
+shader_param/alpha_scissor = 1.0
+shader_param/jitter = 0.5
+shader_param/jitter_depth_independent = true
+shader_param/jitter_z_coordinate = true

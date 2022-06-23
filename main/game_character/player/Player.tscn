@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://5r7dxoni73o3"]
+[gd_scene load_steps=19 format=3 uid="uid://cocfv4hdxnmw5"]
 
 [ext_resource type="PackedScene" uid="uid://b7fu0jyb5ngu" path="res://main/game_character/GameCharacter.tscn" id="1_q4njy"]
 [ext_resource type="Script" path="res://main/game_character/player/player.gd" id="2_bu3ff"]
@@ -9,9 +9,42 @@
 [ext_resource type="Script" path="res://main/state/game_character_state/player_state/player_strafe.gd" id="5_uypwk"]
 [ext_resource type="Script" path="res://main/state/game_character_state/player_state/player_strafe_air.gd" id="7_r383q"]
 [ext_resource type="PackedScene" uid="uid://bbyqfivjuoavt" path="res://main/game_character/player/PlayerModel.glb" id="8_duvo4"]
+[ext_resource type="Shader" path="res://main/shader/psx_shader.gdshader" id="9_mnmqq"]
+[ext_resource type="Texture2D" uid="uid://b4mdqvo5runny" path="res://assets/body_texture.png" id="10_pppwx"]
+[ext_resource type="Texture2D" uid="uid://c4nefga5sknh1" path="res://assets/sword_texture.png" id="11_b58vy"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0g4xv"]
 height = 2.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cpmq1"]
+render_priority = 0
+shader = ExtResource( "9_mnmqq" )
+shader_param/affine_texture_mapping = true
+shader_param/albedo = ExtResource( "10_pppwx" )
+shader_param/alpha_scissor = 1.0
+shader_param/jitter = 0.5
+shader_param/jitter_depth_independent = true
+shader_param/jitter_z_coordinate = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_skqk2"]
+render_priority = 0
+shader = ExtResource( "9_mnmqq" )
+shader_param/affine_texture_mapping = true
+shader_param/albedo = ExtResource( "11_b58vy" )
+shader_param/alpha_scissor = 1.0
+shader_param/jitter = 0.5
+shader_param/jitter_depth_independent = true
+shader_param/jitter_z_coordinate = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jmsd5"]
+render_priority = 0
+shader = ExtResource( "9_mnmqq" )
+shader_param/affine_texture_mapping = true
+shader_param/albedo = ExtResource( "10_pppwx" )
+shader_param/alpha_scissor = 1.0
+shader_param/jitter = 0.5
+shader_param/jitter_depth_independent = true
+shader_param/jitter_z_coordinate = true
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4h7s6"]
 radius = 0.25
@@ -65,19 +98,28 @@ bones/4/position = Vector3(0.917325, 6.66407, 0.315903)
 bones/4/rotation = Quaternion(1.65842e-07, -9.28818e-08, -0.994536, 0.104391)
 bones/5/rotation = Quaternion(3.14811e-08, 2.49653e-07, -0.120799, 0.992677)
 bones/8/rotation = Quaternion(0.0316519, -0.248419, -0.0926709, 0.96369)
-bones/9/position = Vector3(0.383208, 4.39234, 0.0621168)
-bones/9/rotation = Quaternion(-0.203303, -0.0965132, -0.974027, 0.0249899)
-bones/10/rotation = Quaternion(-0.136702, -0.000303182, -0.0106893, 0.990555)
-bones/13/position = Vector3(-0.917325, 6.66407, 0.315903)
-bones/13/rotation = Quaternion(1.47556e-07, 1.09631e-07, 0.996545, 0.0830559)
-bones/14/rotation = Quaternion(-2.00779e-10, -4.94588e-08, 0.0954228, 0.995437)
-bones/17/rotation = Quaternion(-0.0136739, 0.255386, 0.0783777, 0.96356)
-bones/18/position = Vector3(-0.414267, 4.39234, 0.0621168)
-bones/18/rotation = Quaternion(-0.120162, 0.0982815, 0.987736, 0.0167344)
-bones/19/rotation = Quaternion(-0.136702, 0.00030319, 0.0106893, 0.990555)
+bones/9/position = Vector3(0.129671, 0.466559, 0.517749)
+bones/9/rotation = Quaternion(0.542946, -0.453001, -0.53221, 0.465566)
+bones/10/position = Vector3(0.383208, 4.39234, 0.0621168)
+bones/10/rotation = Quaternion(-0.203303, -0.0965132, -0.974027, 0.0249899)
+bones/11/rotation = Quaternion(-0.136702, -0.000303182, -0.0106893, 0.990555)
+bones/14/position = Vector3(-0.917325, 6.66407, 0.315903)
+bones/14/rotation = Quaternion(1.47556e-07, 1.09631e-07, 0.996545, 0.0830559)
+bones/15/rotation = Quaternion(-2.00779e-10, -4.94588e-08, 0.0954228, 0.995437)
+bones/18/rotation = Quaternion(-0.0136739, 0.255386, 0.0783777, 0.96356)
+bones/19/position = Vector3(-0.414267, 4.39234, 0.0621168)
+bones/19/rotation = Quaternion(-0.120162, 0.0982815, 0.987736, 0.0167344)
+bones/20/rotation = Quaternion(-0.136702, 0.00030319, 0.0106893, 0.990555)
 
-[node name="AnimationPlayer" parent="PlayerModel" index="1"]
-autoplay = "Idle"
+[node name="Body" parent="PlayerModel/Armature/Skeleton3D" index="0"]
+surface_material_override/0 = SubResource( "ShaderMaterial_cpmq1" )
+
+[node name="Cube" parent="PlayerModel/Armature/Skeleton3D" index="1"]
+material_override = SubResource( "ShaderMaterial_skqk2" )
+
+[node name="Mask" parent="PlayerModel/Armature/Skeleton3D" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+material_override = SubResource( "ShaderMaterial_jmsd5" )
 
 [node name="Camera3D" type="Camera3D" parent="." index="5"]
 transform = Transform3D(-1, 2.27124e-08, -1.37525e-07, 3.30054e-09, 0.990217, 0.139536, 1.39349e-07, 0.139536, -0.990217, 0, 2.00832, -3.60898)
