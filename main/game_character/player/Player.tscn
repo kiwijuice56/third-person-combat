@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://5r7dxoni73o3"]
+[gd_scene load_steps=13 format=3 uid="uid://5r7dxoni73o3"]
 
 [ext_resource type="PackedScene" uid="uid://b7fu0jyb5ngu" path="res://main/game_character/GameCharacter.tscn" id="1_q4njy"]
 [ext_resource type="Script" path="res://main/game_character/player/player.gd" id="2_bu3ff"]
@@ -9,22 +9,9 @@
 [ext_resource type="Script" path="res://main/state/game_character_state/player_state/player_strafe.gd" id="5_uypwk"]
 [ext_resource type="Script" path="res://main/state/game_character_state/player_state/player_strafe_air.gd" id="7_r383q"]
 [ext_resource type="PackedScene" uid="uid://bbyqfivjuoavt" path="res://main/game_character/player/PlayerModel.glb" id="8_duvo4"]
-[ext_resource type="Shader" path="res://main/shader/psx_shader.gdshader" id="9_mnf5y"]
-[ext_resource type="Texture2D" uid="uid://cbs6kpbtgftvg" path="res://assets/body_texture.png" id="10_bu1vy"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0g4xv"]
 height = 2.5
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_57yxj"]
-render_priority = 0
-shader = ExtResource( "9_mnf5y" )
-shader_param/albedoTex = ExtResource( "10_bu1vy" )
-shader_param/color = Color(1, 1, 1, 1)
-shader_param/cull_distance = 30.0
-shader_param/resolution = 256.0
-shader_param/specular_intensity = 1.0
-shader_param/uv_offset = null
-shader_param/uv_scale = null
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4h7s6"]
 radius = 0.25
@@ -67,6 +54,9 @@ owner_path = NodePath("../..")
 [node name="PlayerModel" parent="." index="4" instance=ExtResource( "8_duvo4" )]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
 
+[node name="Armature" parent="PlayerModel" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0)
+
 [node name="Skeleton3D" parent="PlayerModel/Armature" index="0"]
 bones/0/rotation = Quaternion(0.0727496, 0, -1.61537e-17, 0.99735)
 bones/1/rotation = Quaternion(0.0639138, 1.18966e-07, 7.61912e-09, 0.997955)
@@ -85,9 +75,6 @@ bones/17/rotation = Quaternion(-0.0136739, 0.255386, 0.0783777, 0.96356)
 bones/18/position = Vector3(-0.414267, 4.39234, 0.0621168)
 bones/18/rotation = Quaternion(-0.120162, 0.0982815, 0.987736, 0.0167344)
 bones/19/rotation = Quaternion(-0.136702, 0.00030319, 0.0106893, 0.990555)
-
-[node name="Body" parent="PlayerModel/Armature/Skeleton3D" index="0"]
-surface_material_override/0 = SubResource( "ShaderMaterial_57yxj" )
 
 [node name="AnimationPlayer" parent="PlayerModel" index="1"]
 autoplay = "Idle"

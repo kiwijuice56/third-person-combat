@@ -9,7 +9,7 @@ const BACKWARD_DRAG: float = 0.55
 const SIDE_STEP_VELOCITY: Vector2 = Vector2(10, 12)
 
 # How far to offset camera when moving left or right
-const HORIZONTAL_OFFSET: float = 0.65
+const HORIZONTAL_OFFSET: float = 0.85
 
 func physics_update(_delta) -> void:
 	# Return with no targets or prompt to untarget

@@ -1,5 +1,5 @@
 shader_type spatial; 
-render_mode skip_vertex_transform, diffuse_lambert_wrap;
+render_mode skip_vertex_transform, diffuse_lambert_wrap, ;
 
 uniform vec4 color: source_color = vec4(1.0);
 uniform sampler2D albedoTex;

@@ -4,11 +4,11 @@ class_name PlayerCamera
 const TRANSITION_TIME: float = 0.2
 const ROTATE_SPEED: float = 2.5
 # Describes position of camera in targeting with (horizontal distance away from player colinear with the player and target, y distance above player)
-const TARGETING_OFFSET: Vector2 = Vector2(2.0, 1.45)
+const TARGETING_OFFSET: Vector2 = Vector2(2.0, 2.4)
 # Describes position of neutral camera with (horizontal distance away from player, y distance above player)
-const NORMAL_OFFSET: Vector2 = Vector2(3.0, 2.0)
+const NORMAL_OFFSET: Vector2 = Vector2(3, 2.4)
 # Describes the y distance above the player to aim at in neutral camera
-const NORMAL_LOOK_OFFSET: float = 1.0
+const NORMAL_LOOK_OFFSET: float = 2.0
 
 @onready var player: Player = get_parent()
 var transition_tween: Tween
