@@ -1,5 +1,5 @@
 shader_type spatial;
-render_mode vertex_lighting, skip_vertex_transform, diffuse_lambert_wrap;
+render_mode unshaded, skip_vertex_transform, diffuse_lambert_wrap, cull_disabled;
 
 uniform sampler2D albedo: hint_default_black, source_color, filter_nearest;
 uniform sampler2D specular: hint_default_black;
@@ -9,7 +9,7 @@ uniform float jitter: hint_range(0.0, 1.0) = 0.5;
 uniform bool jitter_z_coordinate = true;
 uniform bool jitter_depth_independent = true;
 uniform bool affine_texture_mapping = true;
-uniform float alpha_scissor: hint_range(0.0, 1.0) = 1.0;
+uniform float alpha_scissor: hint_range(0.0, 1.0) = 0.5;
 
 void vertex() {
 	VERTEX = (MODELVIEW_MATRIX * vec4(VERTEX, 1.0)).xyz;
@@ -39,9 +39,10 @@ void fragment() {
 	if (affine_texture_mapping) {
 		uv /= VERTEX.z;
 	}
-	
+	if(texture(albedo, uv).a <= alpha_scissor) {
+		discard;
+	}
 	ALBEDO = texture(albedo, uv).rgb;
-	// ALPHA_SCISSOR = alpha_scissor;
-	EMISSION = texture(emission, uv).rgb;
+	EMISSION =  texture(emission, uv).rgb;
 	SPECULAR = texture(specular, uv).r;
 }

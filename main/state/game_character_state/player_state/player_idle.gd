@@ -25,3 +25,6 @@ func physics_update(_delta) -> void:
 		return
 	if Input.is_action_just_pressed("target") and len(player.targets) > 0:
 		state_machine.transition_to("PlayerStrafe")
+
+func enter(_msg: Dictionary = {}) -> void:
+	player.anim_playback.travel("Idle")

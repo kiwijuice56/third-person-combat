@@ -1,12 +1,12 @@
 extends Camera3D
 class_name PlayerCamera
 
-const TRANSITION_TIME: float = 0.2
-const ROTATE_SPEED: float = 2.5
+const TRANSITION_TIME: float = 0.25
+const ROTATE_SPEED: float = 3.5
 # Describes position of camera in targeting with (horizontal distance away from player colinear with the player and target, y distance above player)
 const TARGETING_OFFSET: Vector2 = Vector2(2.0, 2.4)
 # Describes position of neutral camera with (horizontal distance away from player, y distance above player)
-const NORMAL_OFFSET: Vector2 = Vector2(3, 2.4)
+const NORMAL_OFFSET: Vector2 = Vector2(3, 2.8)
 # Describes the y distance above the player to aim at in neutral camera
 const NORMAL_LOOK_OFFSET: float = 2.0
 
@@ -22,14 +22,15 @@ func _ready() -> void:
 func _process(delta) -> void:
 	if not rotation_enabled:
 		return
-	var rotate_axis = Vector3(0, get_input_direction().x, 0).normalized()
+	var input_direction: Vector2 =  get_input_direction()
+	var rotate_axis = Vector3(0, input_direction.x, 0).normalized()
 	if is_equal_approx(rotate_axis.y, 0.0):
 		return
 	var pivot_point = player.global_transform.origin
 	var pivot_radius = global_transform.origin - pivot_point
 	var pivot_transform = Transform3D(transform.basis, pivot_point)
-	global_transform = pivot_transform.rotated(rotate_axis, delta*ROTATE_SPEED)
-	global_transform.origin = pivot_point + pivot_radius.rotated(rotate_axis, delta*ROTATE_SPEED)
+	global_transform = pivot_transform.rotated(rotate_axis, delta * ROTATE_SPEED * min(1.0, abs(input_direction.x)))
+	global_transform.origin = pivot_point + pivot_radius.rotated(rotate_axis, delta * ROTATE_SPEED * min(1.0, abs(input_direction.x)))
 
 func get_input_direction() -> Vector2:
 	return Vector2(

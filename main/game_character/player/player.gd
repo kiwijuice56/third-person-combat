@@ -1,9 +1,11 @@
 extends GameCharacter
 class_name Player
 
-const ACCEL: float = 0.1
-const MAX_SPEED: float = 9.0
+const ACCEL: float = 0.125
+const MAX_SPEED: float = 7.0
 const JUMP_VELOCITY: float = 20.0
+
+signal strafe_state_changed(is_strafing)
 
 @onready var camera: Camera3D = $Camera3D
 @onready var shape: CollisionShape3D = $CollisionShape3D

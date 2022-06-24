@@ -1,3 +1,6 @@
+AnimationPlayer
+Control
+ColorRect
 CanvasLayer
 Label
 Label3D
@@ -10,7 +13,6 @@ DirectionalLight3D
 MeshInstance3D
 Node
 GameCharacterState (game_character_state.gd)
-AnimationPlayer
 AnimationTree
 StaticBody3D
 CharacterBody3D

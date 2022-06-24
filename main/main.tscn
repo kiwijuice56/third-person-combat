@@ -1,8 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://ifst0521wi2h"]
+[gd_scene load_steps=16 format=3 uid="uid://nospdaxmi6ri"]
 
-[ext_resource type="PackedScene" path="res://main/game_character/player/player.tscn" id="1_kr7jf"]
+[ext_resource type="Script" path="res://main/main.gd" id="1_ctj0q"]
+[ext_resource type="PackedScene" uid="uid://dliplqb7r17x1" path="res://main/game_character/player/Player.tscn" id="1_kr7jf"]
 [ext_resource type="PackedScene" uid="uid://b7fu0jyb5ngu" path="res://main/game_character/GameCharacter.tscn" id="2_a13qh"]
-[ext_resource type="Script" path="res://main/fps_label.gd" id="3_dqarp"]
+[ext_resource type="Script" path="res://main/ui/fps_label.gd" id="3_dqarp"]
+[ext_resource type="Script" path="res://main/ui/target_blocker.gd" id="5_fmkeh"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_jthy5"]
 size = Vector2(25, 25)
@@ -14,9 +16,9 @@ size = Vector3(25, 2, 25)
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_nb466"]
 rayleigh_coefficient = 0.62
-rayleigh_color = Color(0.4, 0.6, 0.803922, 1)
+rayleigh_color = Color(0, 0, 0, 1)
 mie_coefficient = 0.047
-mie_color = Color(0.811765, 0.454902, 0.584314, 1)
+mie_color = Color(0.596078, 0.270588, 0.423529, 1)
 ground_color = Color(0.054902, 0.0862745, 0.172549, 1)
 
 [sub_resource type="Sky" id="Sky_g57fw"]
@@ -25,20 +27,107 @@ sky_material = SubResource( "PhysicalSkyMaterial_nb466" )
 [sub_resource type="Environment" id="Environment_24ohx"]
 background_mode = 2
 sky = SubResource( "Sky_g57fw" )
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0
+volumetric_fog_albedo = Color(0.27451, 0.0941176, 0.133333, 1)
+adjustment_enabled = true
+adjustment_brightness = 0.9
+adjustment_contrast = 1.02
+adjustment_saturation = 1.02
+
+[sub_resource type="Animation" id="Animation_xcrom"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TopBlock:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"points": PackedFloat32Array(-20, -0.25, 0, 0.25, 0, 1),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BotBlock:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"points": PackedFloat32Array(241, -0.25, 0, 0.25, 0, 1),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_8cpj4"]
+resource_name = "block"
+length = 0.4
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TopBlock:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"points": PackedFloat32Array(-20, -0.25, 0, 0.25, 0, 1, 0, -0.25, 0, 0.25, 0, 0),
+"times": PackedFloat32Array(0, 0.4)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BotBlock:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"points": PackedFloat32Array(241, -0.25, 0, 0.25, 0, 1, 221, -0.25, 0, 0.25, 0, 0),
+"times": PackedFloat32Array(0, 0.4)
+}
+
+[sub_resource type="Animation" id="Animation_ixdvh"]
+resource_name = "unblock"
+length = 0.4
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TopBlock:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -20, -0.25, 0, 0.25, 0, 1),
+"times": PackedFloat32Array(0, 0.4)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BotBlock:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"points": PackedFloat32Array(221, -0.25, 0, 0.25, 0, 0, 241, -0.25, 0, 0.25, 0, 1),
+"times": PackedFloat32Array(0, 0.4)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_m0818"]
+_data = {
+"RESET": SubResource( "Animation_xcrom" ),
+"block": SubResource( "Animation_8cpj4" ),
+"unblock": SubResource( "Animation_ixdvh" )
+}
 
 [node name="Main" type="Node"]
+script = ExtResource( "1_ctj0q" )
 
 [node name="Player" parent="." instance=ExtResource( "1_kr7jf" )]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.60932, 0)
 collision_layer = 1
 collision_mask = 1
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="Plane" type="MeshInstance3D" parent="."]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
 mesh = SubResource( "PlaneMesh_jthy5" )
 
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Plane"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Plane/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 shape = SubResource( "BoxShape3D_jfw8c" )
 
@@ -57,11 +146,37 @@ state_enabled = false
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( "Environment_24ohx" )
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="UILayer" type="CanvasLayer" parent="."]
 
-[node name="Label" type="Label" parent="CanvasLayer"]
+[node name="TargetBlocker" type="Control" parent="UILayer"]
 offset_right = 40.0
-offset_bottom = 23.0
+offset_bottom = 40.0
+script = ExtResource( "5_fmkeh" )
+player_path = NodePath("../../Player")
+
+[node name="TopBlock" type="ColorRect" parent="UILayer/TargetBlocker"]
+offset_top = -20.0
+offset_right = 425.0
+offset_bottom = -1.0
+color = Color(0, 0, 0, 1)
+
+[node name="BotBlock" type="ColorRect" parent="UILayer/TargetBlocker"]
+offset_top = 241.0
+offset_right = 425.0
+offset_bottom = 260.0
+color = Color(0, 0, 0, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UILayer/TargetBlocker"]
+playback_speed = 1.5
+libraries = {
+"": SubResource( "AnimationLibrary_m0818" )
+}
+
+[node name="FpsLabel" type="Label" parent="UILayer"]
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 42.0
+offset_bottom = 24.0
 theme_override_font_sizes/font_size = 12
 text = "fps: "
 script = ExtResource( "3_dqarp" )

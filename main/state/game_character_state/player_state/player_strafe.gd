@@ -5,11 +5,12 @@ class_name PlayerStrafe
 const DRAG: float = 0.75
 const HORIZONTAL_DRAG: float = 0.55
 const BACKWARD_DRAG: float = 0.55
-
 const SIDE_STEP_VELOCITY: Vector2 = Vector2(10, 12)
 
-# How far to offset camera when moving left or right
-const HORIZONTAL_OFFSET: float = 0.85
+# Describes how far to offset camera when moving left or right
+const HORIZONTAL_OFFSET: float = 1.5
+# Describes the horizontal distance from the player to point the camera in neutral strafing for visibility
+const NEUTRAL_HORIZONTAL_OFFSET: float = 0.8
 
 func physics_update(_delta) -> void:
 	# Return with no targets or prompt to untarget
@@ -17,13 +18,20 @@ func physics_update(_delta) -> void:
 		player.camera.recenter()
 		state_machine.transition_to("PlayerRun")
 		return
-	
+		
 	# Take directional input and move in camera direction axis
-	var input_direction: Vector2 = player.get_input_direction().normalized()
+	var input_direction: Vector2 = player.get_input_direction()
+	if is_zero_approx(input_direction.length()):
+		player.accel_direction -= player.accel_direction * player.ACCEL
+	else:
+		player.accel_direction += input_direction * player.ACCEL
+	
+	player.anim_tree.set("parameters/Strafe/Direction/blend_amount", player.accel_direction.x)
+	
 	var camera_basis: Basis = player.camera.global_transform.basis
 	player.velocity = DRAG * player.MAX_SPEED * (
-		(HORIZONTAL_DRAG * input_direction.x * camera_basis.x) +
-		((BACKWARD_DRAG if input_direction.y > 0.0 else 1.0) * input_direction.y * camera_basis.z))
+		(player.accel_direction.x * HORIZONTAL_DRAG * camera_basis.x) +
+		((BACKWARD_DRAG if input_direction.y > 0.0 else 1.0) * player.accel_direction.y * camera_basis.z))
 	player.velocity.y = 0
 	player.move_and_slide()
 	
@@ -33,7 +41,14 @@ func physics_update(_delta) -> void:
 	elif input_direction.x > 0:
 		player.camera.look_at_target(player.targets[0], -camera_basis.x * HORIZONTAL_OFFSET)
 	else:
-		player.camera.look_at_target(player.targets[0])
+		var cam_to_target: Vector3 = (player.camera.global_transform.origin - player.targets[0].global_transform.origin).normalized()
+		var cam_to_target_2d: Vector2 = Vector2(cam_to_target.x, cam_to_target.z).rotated(-player.camera.rotation.y).normalized()
+		
+		var cam_to_player: Vector3 = (player.camera.global_transform.origin - player.global_transform.origin).normalized()
+		var cam_to_player_2d: Vector2 = Vector2(cam_to_player.x, cam_to_player.z).rotated(-player.camera.rotation.y).normalized()
+		
+		var angle_dif: float = cam_to_player_2d.angle_to(cam_to_target_2d)
+		player.camera.look_at_target(player.targets[0], (1 if angle_dif > 0.0 else -1) * camera_basis.x * NEUTRAL_HORIZONTAL_OFFSET)
 	
 	player.mesh.look_at(player.targets[0].global_transform.origin)
 	player.shape.look_at(player.targets[0].global_transform.origin)
@@ -62,6 +77,9 @@ func physics_update(_delta) -> void:
 
 func enter(_msg: Dictionary = {}) -> void:
 	player.camera.rotation_enabled = false
+	player.anim_playback.travel("Strafe")
+	player.emit_signal("strafe_state_changed", true)
 
 func exit() -> void:
 	player.camera.rotation_enabled = true
+	player.emit_signal("strafe_state_changed", false)
