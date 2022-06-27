@@ -1,6 +1,12 @@
 extends PlayerState
 class_name PlayerRun
 
+# CONNECTIONS
+# Idle <- input:none
+# Air <- input:jump, fall
+# Attack <- input:attack
+# StrafeTarget <- input:target
+
 const MESH_TURN_SPEED: float = 17.5
 const TURN_TWEEN_CUTOFF: float = PI/2
 
@@ -15,7 +21,6 @@ func physics_update(delta) -> void:
 	# Take directional input and move in camera direction axis
 	var input_direction: Vector2 = player.get_input_direction().normalized()
 	var camera_basis: Basis = player.camera.global_transform.basis
-	
 	
 	player.anim_tree.set("parameters/Run/Speed/blend_amount", player.accel_direction.length())
 	player.accel_direction += input_direction * player.ACCEL
@@ -34,6 +39,9 @@ func physics_update(delta) -> void:
 	
 	if Input.is_action_just_pressed("jump"):
 		state_machine.transition_to("PlayerAir", {"init_velocity" : Vector3(0, player.JUMP_VELOCITY, 0)})
+		return
+	if Input.is_action_just_pressed("attack"):
+		state_machine.transition_to("PlayerAttack", {"running_start": true})
 		return
 	if Input.is_action_just_pressed("target") and len(player.targets) > 0:
 		state_machine.transition_to("PlayerStrafe")

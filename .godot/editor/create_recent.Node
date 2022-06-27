@@ -1,3 +1,7 @@
+CPUParticles3D
+CPUParticles2D
+GPUParticles2D
+Node
 AnimationPlayer
 Control
 ColorRect
@@ -11,7 +15,6 @@ Camera3D
 Position3D
 DirectionalLight3D
 MeshInstance3D
-Node
 GameCharacterState (game_character_state.gd)
 AnimationTree
 StaticBody3D

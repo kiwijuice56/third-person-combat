@@ -34,6 +34,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://main/state/game_character_state/player_state/player_air.gd"
 }, {
+"base": "PlayerState",
+"class": &"PlayerAttack",
+"language": &"GDScript",
+"path": "res://main/state/game_character_state/player_state/player_attack.gd"
+}, {
 "base": "Camera3D",
 "class": &"PlayerCamera",
 "language": &"GDScript",
@@ -80,6 +85,7 @@ _global_script_class_icons={
 "GameCharacterState": "",
 "Player": "",
 "PlayerAir": "",
+"PlayerAttack": "",
 "PlayerCamera": "",
 "PlayerIdle": "",
 "PlayerRun": "",
@@ -148,6 +154,11 @@ target={
 "deadzone": 0.5,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":5,"axis_value":1.0,"script":null)
 , Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":4,"axis_value":1.0,"script":null)
+]
+}
+attack={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":0,"pressure":0.0,"pressed":false,"script":null)
 ]
 }
 

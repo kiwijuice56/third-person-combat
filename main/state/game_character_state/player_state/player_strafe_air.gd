@@ -1,6 +1,9 @@
 extends PlayerState
 class_name PlayerStrafeAir
 
+# CONNECTIONS
+# Strafe <- jump complete
+
 const HORIZONTAL_OFFSET: float = PlayerStrafe.HORIZONTAL_OFFSET
 
 var flip_direction: Vector2

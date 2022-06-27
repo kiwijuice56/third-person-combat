@@ -1,6 +1,12 @@
 extends PlayerState
 class_name PlayerIdle
 
+# CONNECTIONS
+# Run <- input:run
+# Air <- input:jump, fall
+# Attack <- input:attack
+# Strafe <- input:target
+
 func physics_update(_delta) -> void:
 	if player.is_moving():
 		state_machine.transition_to("PlayerRun")
@@ -22,6 +28,9 @@ func physics_update(_delta) -> void:
 	
 	if Input.is_action_just_pressed("jump"):
 		state_machine.transition_to("PlayerAir",  {"init_velocity" : Vector3(0, player.JUMP_VELOCITY, 0)})
+		return
+	if Input.is_action_just_pressed("attack"):
+		state_machine.transition_to("PlayerAttack")
 		return
 	if Input.is_action_just_pressed("target") and len(player.targets) > 0:
 		state_machine.transition_to("PlayerStrafe")

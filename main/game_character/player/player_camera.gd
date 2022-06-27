@@ -1,7 +1,7 @@
 extends Camera3D
 class_name PlayerCamera
 
-const TRANSITION_TIME: float = 0.25
+const TRANSITION_TIME: float = 0.35
 const ROTATE_SPEED: float = 3.5
 # Describes position of camera in targeting with (horizontal distance away from player colinear with the player and target, y distance above player)
 const TARGETING_OFFSET: Vector2 = Vector2(2.0, 2.4)

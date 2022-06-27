@@ -1,5 +1,3 @@
 res://main/game_character/player/Player.tscn
 res://main/Main.tscn
 res://main/game_character/GameCharacter.tscn
-res://main/game_character/game_character.gd
-res://main/state/game_character_state/player_state/player_run.gd

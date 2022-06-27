@@ -1,6 +1,12 @@
 extends PlayerState
 class_name PlayerStrafe
 
+# CONNECTIONS
+# Idle <- input:target
+# StrafeAir <- input:jump
+# Air <- fall
+# Attack <- input:attack
+
 # Slowing of movement in different directions while strafing
 const DRAG: float = 0.75
 const HORIZONTAL_DRAG: float = 0.55
@@ -17,6 +23,7 @@ func physics_update(_delta) -> void:
 	if len(player.targets) == 0 or Input.is_action_just_pressed("target"):
 		player.camera.recenter()
 		state_machine.transition_to("PlayerRun")
+		stop_strafing()
 		return
 		
 	# Take directional input and move in camera direction axis
@@ -74,12 +81,15 @@ func physics_update(_delta) -> void:
 			flip_direction = Vector2(0, 1).normalized()
 		state_machine.transition_to("PlayerStrafeAir", {"init_velocity" : Vector3(0, SIDE_STEP_VELOCITY.y, 0), "flip_direction": flip_direction})
 		return
+	if Input.is_action_just_pressed("attack"):
+		state_machine.transition_to("PlayerAttack", {"strafing": true})
+		return
 
 func enter(_msg: Dictionary = {}) -> void:
 	player.camera.rotation_enabled = false
 	player.anim_playback.travel("Strafe")
 	player.emit_signal("strafe_state_changed", true)
 
-func exit() -> void:
+func stop_strafing() -> void:
 	player.camera.rotation_enabled = true
 	player.emit_signal("strafe_state_changed", false)

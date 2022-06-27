@@ -7,6 +7,7 @@ var state_machine: StateMachine = null
 
 func _ready() -> void:
 	state_owner = get_node(owner_path)
+	assert(state_owner != null)
 
 func physics_update(_delta) -> void:
 	pass
