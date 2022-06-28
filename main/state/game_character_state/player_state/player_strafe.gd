@@ -11,7 +11,7 @@ class_name PlayerStrafe
 const DRAG: float = 0.75
 const HORIZONTAL_DRAG: float = 0.55
 const BACKWARD_DRAG: float = 0.55
-const SIDE_STEP_VELOCITY: Vector2 = Vector2(10, 12)
+const SIDE_STEP_VELOCITY: Vector2 = Vector2(16, 12)
 
 # Describes how far to offset camera when moving left or right
 const HORIZONTAL_OFFSET: float = 1.5

@@ -10,6 +10,7 @@ uniform bool jitter_z_coordinate = true;
 uniform bool jitter_depth_independent = true;
 uniform bool affine_texture_mapping = true;
 uniform float alpha_scissor: hint_range(0.0, 1.0) = 0.5;
+uniform float alpha: hint_range(0.0, 1.0) = 1.0;
 
 void vertex() {
 	VERTEX = (MODELVIEW_MATRIX * vec4(VERTEX, 1.0)).xyz;
@@ -42,6 +43,7 @@ void fragment() {
 	if(texture(albedo, uv).a <= alpha_scissor) {
 		discard;
 	}
+	ALPHA = alpha;
 	ALBEDO = texture(albedo, uv).rgb;
 	EMISSION =  texture(emission, uv).rgb;
 	SPECULAR = texture(specular, uv).r;

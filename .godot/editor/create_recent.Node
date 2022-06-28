@@ -1,8 +1,9 @@
+BoneAttachment3D
+AnimationPlayer
 CPUParticles3D
 CPUParticles2D
 GPUParticles2D
 Node
-AnimationPlayer
 Control
 ColorRect
 CanvasLayer

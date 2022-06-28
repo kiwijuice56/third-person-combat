@@ -1,3 +1,6 @@
 res://main/game_character/player/Player.tscn
 res://main/Main.tscn
 res://main/game_character/GameCharacter.tscn
+res://main/game_character/player/SwordTrail.tscn
+res://main/game_character/player/sword_trail.gd
+res://main/game_character/player/sword_trail_effect.gd

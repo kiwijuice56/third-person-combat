@@ -6,7 +6,7 @@ const ROTATE_SPEED: float = 3.5
 # Describes position of camera in targeting with (horizontal distance away from player colinear with the player and target, y distance above player)
 const TARGETING_OFFSET: Vector2 = Vector2(2.0, 2.4)
 # Describes position of neutral camera with (horizontal distance away from player, y distance above player)
-const NORMAL_OFFSET: Vector2 = Vector2(3, 2.8)
+const NORMAL_OFFSET: Vector2 = Vector2(2.8, 3.4)
 # Describes the y distance above the player to aim at in neutral camera
 const NORMAL_LOOK_OFFSET: float = 2.0
 

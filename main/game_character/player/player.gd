@@ -7,6 +7,7 @@ const JUMP_VELOCITY: float = 20.0
 
 signal strafe_state_changed(is_strafing)
 
+@onready var sword_trail: SwordTrail = $PlayerModel/Armature/Skeleton3D/Sword
 @onready var camera: Camera3D = $Camera3D
 @onready var shape: CollisionShape3D = $CollisionShape3D
 @onready var targeting_range: Area3D = $TargetingRange

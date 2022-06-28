@@ -1,5 +1,5 @@
-res://main/state/game_character_state/player_state
 res://main/game_character/player
+res://main/state/game_character_state/player_state
 res://main/ui
 res://main/shader
 D:/software/installed/Blender

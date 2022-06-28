@@ -78,6 +78,16 @@ _global_script_classes=[{
 "class": &"StateMachine",
 "language": &"GDScript",
 "path": "res://main/state/state_machine/state_machine.gd"
+}, {
+"base": "MeshInstance3D",
+"class": &"SwordTrail",
+"language": &"GDScript",
+"path": "res://main/game_character/player/sword_trail.gd"
+}, {
+"base": "MeshInstance3D",
+"class": &"SwordTrailEffect",
+"language": &"GDScript",
+"path": "res://main/game_character/player/sword_trail_effect.gd"
 }]
 _global_script_class_icons={
 "FpsLabel": "",
@@ -93,7 +103,9 @@ _global_script_class_icons={
 "PlayerStrafe": "",
 "PlayerStrafeAir": "",
 "State": "",
-"StateMachine": ""
+"StateMachine": "",
+"SwordTrail": "",
+"SwordTrailEffect": ""
 }
 
 [application]

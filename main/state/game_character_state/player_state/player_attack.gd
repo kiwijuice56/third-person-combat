@@ -60,10 +60,11 @@ func attack_stage_transition() -> void:
 		window_open = true
 		timer.start(ATTACK_WINDOW_END)
 	else:
+		player.sword_trail.active = false
 		state_machine.transition_to("PlayerIdle" if not strafing else "PlayerStrafe")
 
 func attack_hit() -> void:
 	window_open = false
 	timer.start(ATTACK_WINDOW_START)
-	
+	player.sword_trail.active = true
 	player.anim_playback.travel("Attack" + str(combo))
